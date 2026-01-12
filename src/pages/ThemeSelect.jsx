@@ -1,10 +1,21 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
+import { useEffect } from "react";
 
 export default function ThemeSelect() {
   const navigate = useNavigate();
   const { setTheme } = useTheme();
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "auto";
+      document.documentElement.style.overflow = "auto";
+    };
+  }, []);
 
   const handleSelect = (selectedTheme) => {
     setTheme(selectedTheme);
@@ -14,14 +25,17 @@ export default function ThemeSelect() {
   return (
     <div
       style={{
-        minHeight: "100vh",
+        position: "fixed",
+        inset: 0,
+        width: "100vw",
+        height: "100dvh",
         backgroundColor: "#000",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         gap: "3rem",
-        padding: "2rem",
         flexWrap: "wrap",
+        overflow: "hidden",
       }}
     >
       {/* Netflix Card */}
