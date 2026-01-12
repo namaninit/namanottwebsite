@@ -73,7 +73,10 @@ export default function Header() {
         </motion.div>
 
         {/* DESKTOP MENU */}
-        <nav className="desktop-menu" style={{ display: "flex", gap: "2rem" }}>
+        <nav
+          className="desktop-menu"
+          style={{ display: "flex", gap: "2rem", alignItems: "center" }}
+        >
           {menuItems.map((item) => {
             const isActive = location.pathname === item.path;
             return (
@@ -107,6 +110,26 @@ export default function Header() {
               </motion.div>
             );
           })}
+
+          {/* 🔘 THEME BUTTON */}
+          <motion.button
+            onClick={() => navigate("/theme")}
+            whileHover={{ scale: 1.05, boxShadow: `0 0 10px ${accent}` }}
+            whileTap={{ scale: 0.95 }}
+            style={{
+              padding: "0.5rem 1.2rem",
+              fontSize: "0.9rem",
+              fontWeight: "600",
+              borderRadius: "6px",
+              border: `1px solid ${accent}`,
+              background: "transparent",
+              color: accent,
+              cursor: "pointer",
+              marginLeft: "1rem",
+            }}
+          >
+            Change Theme
+          </motion.button>
         </nav>
 
         {/* HAMBURGER */}
@@ -175,6 +198,26 @@ export default function Header() {
                 {item.label}
               </motion.span>
             ))}
+
+            {/* MOBILE BUTTON */}
+            <motion.button
+              onClick={() => navigate("/theme")}
+              whileHover={{ scale: 1.05, boxShadow: `0 0 10px ${accent}` }}
+              whileTap={{ scale: 0.95 }}
+              style={{
+                marginTop: "2rem",
+                padding: "0.6rem 1.4rem",
+                fontSize: "1rem",
+                fontWeight: "600",
+                borderRadius: "6px",
+                border: `1px solid ${accent}`,
+                background: "transparent",
+                color: accent,
+                cursor: "pointer",
+              }}
+            >
+              Choose Theme
+            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>
@@ -183,7 +226,7 @@ export default function Header() {
       <style>{`
         @media (max-width: 768px) {
           .desktop-menu {
-            display: none !important;
+            display: none !important; 
           }
           .hamburger {
             display: block !important;
