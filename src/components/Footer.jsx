@@ -20,7 +20,7 @@ const currentYear = new Date().getFullYear();
         marginTop: "4rem",
       }}
     >
-     <p>© {currentYear} Your Name. All rights reserved.</p>
+     <p>© {currentYear} Naman Jain. All rights reserved.</p>
     </footer>
   );
 }
