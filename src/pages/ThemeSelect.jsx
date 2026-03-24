@@ -31,58 +31,79 @@ export default function ThemeSelect() {
         height: "100dvh",
         backgroundColor: "#000",
         display: "flex",
+        flexDirection: "column", // for heading + cards
         alignItems: "center",
         justifyContent: "center",
-        gap: "3rem",
-        flexWrap: "wrap",
+        gap: "2rem",
         overflow: "hidden",
       }}
     >
-      {/* Netflix Card */}
-      <motion.div
-        whileHover={{ scale: 1.08 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => handleSelect("netflix")}
+      {/* Heading */}
+      <h1
         style={{
-          width: "280px",
-          height: "180px",
-          background: "linear-gradient(135deg, #1c1c1c, #000)",
-          border: "2px solid #e50914",
-          borderRadius: "16px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: "pointer",
-          boxShadow: "0 0 30px rgba(229,9,20,0.4)",
+          color: "#fff",
+          fontSize: "2.5rem",
+          letterSpacing: "1px",
         }}
       >
-        <h2 style={{ color: "#e50914", fontSize: "1.8rem" }}>
-          🎬 Naman Netflix
-        </h2>
-      </motion.div>
+        Choose Theme
+      </h1>
 
-      {/* Prime Card */}
-      <motion.div
-        whileHover={{ scale: 1.08 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => handleSelect("prime")}
+      {/* Cards Container */}
+      <div
         style={{
-          width: "280px",
-          height: "180px",
-          background: "linear-gradient(135deg, #0a1a2f, #020b16)",
-          border: "2px solid #00cfff",
-          borderRadius: "16px",
           display: "flex",
-          alignItems: "center",
+          gap: "3rem",
+          flexWrap: "wrap",
           justifyContent: "center",
-          cursor: "pointer",
-          boxShadow: "0 0 30px rgba(0,207,255,0.5)",
         }}
       >
-        <h2 style={{ color: "#00cfff", fontSize: "1.8rem" }}>
-          📺 Naman Prime
-        </h2>
-      </motion.div>
+        {/* Netflix Card */}
+        <motion.div
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => handleSelect("netflix")}
+          style={{
+            width: "280px",
+            height: "180px",
+            background: "linear-gradient(135deg, #1c1c1c, #000)",
+            border: "2px solid #e50914",
+            borderRadius: "16px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+            boxShadow: "0 0 30px rgba(229,9,20,0.4)",
+          }}
+        >
+          <h2 style={{ color: "#e50914", fontSize: "1.8rem" }}>
+            🎬 Naman Netflix
+          </h2>
+        </motion.div>
+
+        {/* Prime Card */}
+        <motion.div
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => handleSelect("prime")}
+          style={{
+            width: "280px",
+            height: "180px",
+            background: "linear-gradient(135deg, #0a1a2f, #020b16)",
+            border: "2px solid #00cfff",
+            borderRadius: "16px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+            boxShadow: "0 0 30px rgba(0,207,255,0.5)",
+          }}
+        >
+          <h2 style={{ color: "#00cfff", fontSize: "1.8rem" }}>
+            📺 Naman Prime
+          </h2>
+        </motion.div>
+      </div>
     </div>
   );
 }

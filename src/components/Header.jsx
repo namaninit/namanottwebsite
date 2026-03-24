@@ -19,133 +19,105 @@ export default function Header() {
     { label: "Contact", path: "/contact" },
   ];
 
-  const bgColor = theme === "netflix" ? "rgba(0,0,0,0.85)" : "rgba(6,24,38,0.9)";
   const accent = theme === "netflix" ? "#e50914" : "#00cfff";
 
-  /* 🔥 SCROLL EFFECT */
+  /* ✅ SMOOTH SCROLL DETECTION */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  /* 🔥 AUTO CLOSE MOBILE MENU ON ROUTE CHANGE */
+  /* ✅ CLOSE MOBILE MENU ON ROUTE CHANGE */
   useEffect(() => {
     setOpen(false);
   }, [location.pathname]);
 
   return (
     <>
-      {/* HEADER */}
+      {/* ✅ FIXED HEADER */}
       <motion.header
+        initial={false}
         animate={{
-          backdropFilter: scrolled ? "blur(10px)" : "blur(0px)",
-          boxShadow: scrolled ? "0 10px 30px rgba(0,0,0,0.5)" : "none",
+          backdropFilter: "blur(12px)",
+          backgroundColor: scrolled
+            ? "rgba(10,10,10,0.75)"
+            : "rgba(10,10,10,0.55)",
+          boxShadow: scrolled
+            ? "0 8px 30px rgba(0,0,0,0.4)"
+            : "none",
         }}
-        transition={{ duration: 0.3 }}
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 1000,
-          background: bgColor,
-          padding: "1rem 2rem",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
+        transition={{ duration: 0.25 }}
+        style={styles.header}
       >
         {/* LOGO */}
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          animate={{
-            textShadow: `0 0 18px ${accent}`,
-          }}
+        <div
           onClick={() => navigate("/home")}
-          style={{
-            fontSize: "1.7rem",
-            fontWeight: "800",
-            cursor: "pointer",
-            color: accent,
-            letterSpacing: "1px",
-          }}
+          style={{ ...styles.logo, color: accent }}
         >
           Naman
-        </motion.div>
+        </div>
 
-        {/* DESKTOP MENU */}
-        <nav
-          className="desktop-menu"
-          style={{ display: "flex", gap: "2rem", alignItems: "center" }}
-        >
+        {/* DESKTOP NAV */}
+        <nav className="desktop-menu" style={styles.nav}>
           {menuItems.map((item) => {
-            const isActive = location.pathname === item.path;
+            const active = location.pathname === item.path;
+
             return (
-              <motion.div
+              <div
                 key={item.label}
                 onClick={() => navigate(item.path)}
-                whileHover={{ scale: 1.05 }}
                 style={{
-                  cursor: "pointer",
-                  position: "relative",
-                  fontSize: "0.95rem",
-                  fontWeight: isActive ? "600" : "400",
-                  color: isActive ? accent : "#fff",
+                  ...styles.link,
+                  color: active ? accent : "#fff",
                 }}
               >
                 {item.label}
-                {isActive && (
+
+                {active && (
                   <motion.div
-                    layoutId="nav-underline"
+                    layoutId="underline"
                     style={{
                       position: "absolute",
-                      bottom: "-6px",
+                      bottom: -6,
                       left: 0,
                       right: 0,
-                      height: "2px",
+                      height: 2,
                       background: accent,
-                      borderRadius: "2px",
+                      borderRadius: 2,
                     }}
                   />
                 )}
-              </motion.div>
+              </div>
             );
           })}
 
-          {/* 🔘 THEME BUTTON */}
-          <motion.button
+          <button
             onClick={() => navigate("/theme")}
-            whileHover={{ scale: 1.05, boxShadow: `0 0 10px ${accent}` }}
-            whileTap={{ scale: 0.95 }}
             style={{
-              padding: "0.5rem 1.2rem",
-              fontSize: "0.9rem",
-              fontWeight: "600",
-              borderRadius: "6px",
-              border: `1px solid ${accent}`,
-              background: "transparent",
+              ...styles.button,
+              borderColor: accent,
               color: accent,
-              cursor: "pointer",
-              marginLeft: "1rem",
             }}
           >
-            Change Theme
-          </motion.button>
+            Theme
+          </button>
         </nav>
 
-        {/* HAMBURGER */}
+        {/* MOBILE ICON */}
         <div
           className="hamburger"
           onClick={() => setOpen(true)}
-          style={{
-            display: "none",
-            fontSize: "1.9rem",
-            cursor: "pointer",
-            color: "#fff",
-          }}
+          style={styles.hamburger}
         >
           ☰
         </div>
       </motion.header>
+
+      {/* ✅ SPACER (VERY IMPORTANT) */}
+      <div style={{ height: "80px" }} />
 
       {/* MOBILE MENU */}
       <AnimatePresence>
@@ -154,70 +126,29 @@ export default function Header() {
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            transition={{ duration: 0.35 }}
-            style={{
-              position: "fixed",
-              top: 0,
-              right: 0,
-              width: "75%",
-              height: "100vh",
-              background: bgColor,
-              zIndex: 2000,
-              padding: "2rem",
-              display: "flex",
-              flexDirection: "column",
-              gap: "1.8rem",
-            }}
+            transition={{ duration: 0.3 }}
+            style={styles.mobileMenu}
           >
             <div
               onClick={() => setOpen(false)}
-              style={{
-                alignSelf: "flex-end",
-                fontSize: "1.6rem",
-                cursor: "pointer",
-                color: accent,
-              }}
+              style={{ ...styles.close, color: accent }}
             >
               ✕
             </div>
 
             {menuItems.map((item) => (
-              <motion.span
+              <div
                 key={item.label}
-                whileTap={{ scale: 0.95 }}
                 onClick={() => navigate(item.path)}
                 style={{
-                  fontSize: "1.3rem",
-                  cursor: "pointer",
-                  fontWeight:
-                    location.pathname === item.path ? "600" : "400",
+                  ...styles.mobileLink,
                   color:
                     location.pathname === item.path ? accent : "#fff",
                 }}
               >
                 {item.label}
-              </motion.span>
+              </div>
             ))}
-
-            {/* MOBILE BUTTON */}
-            <motion.button
-              onClick={() => navigate("/theme")}
-              whileHover={{ scale: 1.05, boxShadow: `0 0 10px ${accent}` }}
-              whileTap={{ scale: 0.95 }}
-              style={{
-                marginTop: "2rem",
-                padding: "0.6rem 1.4rem",
-                fontSize: "1rem",
-                fontWeight: "600",
-                borderRadius: "6px",
-                border: `1px solid ${accent}`,
-                background: "transparent",
-                color: accent,
-                cursor: "pointer",
-              }}
-            >
-              Choose Theme
-            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>
@@ -226,7 +157,7 @@ export default function Header() {
       <style>{`
         @media (max-width: 768px) {
           .desktop-menu {
-            display: none !important; 
+            display: none !important;
           }
           .hamburger {
             display: block !important;
@@ -236,3 +167,77 @@ export default function Header() {
     </>
   );
 }
+
+/* ---------- STYLES ---------- */
+
+const styles = {
+  header: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "80px",
+    padding: "0 2rem",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    zIndex: 9999,
+  },
+
+  logo: {
+    fontSize: "1.5rem",
+    fontWeight: 700,
+    cursor: "pointer",
+  },
+
+  nav: {
+    display: "flex",
+    gap: "2rem",
+    alignItems: "center",
+  },
+
+  link: {
+    position: "relative",
+    fontSize: "0.95rem",
+    cursor: "pointer",
+  },
+
+  button: {
+    padding: "6px 14px",
+    borderRadius: "999px",
+    border: "1px solid",
+    background: "transparent",
+    cursor: "pointer",
+  },
+
+  hamburger: {
+    display: "none",
+    fontSize: "1.8rem",
+    cursor: "pointer",
+  },
+
+  mobileMenu: {
+    position: "fixed",
+    top: 0,
+    right: 0,
+    width: "75%",
+    height: "100vh",
+    background: "#0b0b0b",
+    padding: "2rem",
+    display: "flex",
+    flexDirection: "column",
+    gap: "1.5rem",
+    zIndex: 10000,
+  },
+
+  mobileLink: {
+    fontSize: "1.2rem",
+    cursor: "pointer",
+  },
+
+  close: {
+    alignSelf: "flex-end",
+    fontSize: "1.5rem",
+    cursor: "pointer",
+  },
+};

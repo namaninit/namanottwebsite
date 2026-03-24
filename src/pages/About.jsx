@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
 import profileImg from "../assets/images/naman-about.jpg";
+import resumePDF from "../assets/NamanKResume.pdf";
 
 export default function About() {
   const { theme } = useTheme();
@@ -11,10 +12,13 @@ export default function About() {
 
   const accent = isNetflix ? "#e50914" : "#00cfff";
 
-  // Handle "Download Resume" click
   const handleDownloadClick = () => {
-    setMsg("Coming Soon (Under Creation)");
-    setTimeout(() => setMsg(""), 3000); // Clear message after 3 seconds
+    const link = document.createElement("a");
+    link.href = resumePDF;
+    link.download = "Naman_Jain_Resume.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
