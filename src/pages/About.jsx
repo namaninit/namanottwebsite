@@ -8,7 +8,7 @@ export default function About() {
   const { theme } = useTheme();
   const isNetflix = theme === "netflix";
   const [open, setOpen] = useState(false);
-  // const [msg, setMsg] = useState(""); // For temporary message on download
+  const [msg, setMsg] = useState(""); // For temporary message on download
 
   const accent = isNetflix ? "#e50914" : "#00cfff";
 
